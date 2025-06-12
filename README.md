@@ -1,16 +1,12 @@
 # ⚡ Harsh Shah - Cybersecurity Tools Collection
 
-                                                  ![harshlogo](https://github.com/user-attachments/assets/fd0f0b33-c965-4b36-a145-59a63ed1a524)
+![harshlogo](https://github.com/user-attachments/assets/3612b70a-5196-455f-9c3c-ef27ffec7d45)
 
 
 > A futuristic collection of powerful **client-side cybersecurity tools** built with **HTML, CSS, and JavaScript**.  
 > Everything runs **100% in your browser** — no server, no data leaks!
 
-
-![Cyber Sanskar - Cybersecurity Tools Collection - visual selection (6)](https://github.com/user-attachments/assets/0dc68bdb-702e-4102-984d-f882da5dda89)
-![Cyber Sanskar - Cybersecurity Tools Collection - visual selection (5) (1)](https://github.com/user-attachments/assets/02a66d98-2b3d-42c9-bf78-b8a46b0421dd)
-
-
+![harsh](https://github.com/user-attachments/assets/c5f148da-7a20-4d80-866e-f899616933ac)
 
 ---
 
@@ -22,6 +18,8 @@
 - 📱 **Responsive Design** – Works perfectly on all screen sizes
 - 🔐 **Security-First** – Right-click, copy-paste, and inspect disabled
 
+![harsh (2)](https://github.com/user-attachments/assets/327d52f0-3aec-4e03-96d8-678e9bf10543)
+
 ---
 
 ## 🧰 Tools Included
@@ -29,7 +27,12 @@
 | #️⃣ | Tool Name                        | Description |
 |----|----------------------------------|-------------|
 | 1️⃣ | **Secure Image Steganography**     | Hide one image inside another securely |
+![harsh shah - visual selection (1)](https://github.com/user-attachments/assets/933b1b76-14c9-4728-81e6-f13317567ac1)
+
+
 | 2️⃣ | **AES Encryptor**                 | AES-256 client-side encryption/decryption |
+![harsh shah - visual selection (2)](https://github.com/user-attachments/assets/d140757e-294e-40a4-bf98-52c60fa31314)
+
 | 3️⃣ | **RSA Encryption Tool**           | Generate RSA key pairs and encrypt/decrypt text |
 | 4️⃣ | **Email Header Analyzer**         | Inspect email headers to trace sources |
 | 5️⃣ | **Base64 & Hex Tool**             | Encode/decode in Base64 and Hex formats |
