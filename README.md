@@ -24,23 +24,34 @@
 
 ## 🧰 Tools Included
 
-| #️⃣ | Tool Name                        | Description |
-|----|----------------------------------|-------------|
-| 1️⃣ | **Secure Image Steganography**     | Hide one image inside another securely |
+| 1️⃣ | **Secure Image Steganography**     : Hide one image inside another securely 
 ![harsh shah - visual selection (1)](https://github.com/user-attachments/assets/933b1b76-14c9-4728-81e6-f13317567ac1)
 
 
-| 2️⃣ | **AES Encryptor**                 | AES-256 client-side encryption/decryption |
+| 2️⃣ | **AES Encryptor**                 : AES-256 client-side encryption/decryption 
 ![harsh shah - visual selection (2)](https://github.com/user-attachments/assets/d140757e-294e-40a4-bf98-52c60fa31314)
 
-| 3️⃣ | **RSA Encryption Tool**           | Generate RSA key pairs and encrypt/decrypt text |
-| 4️⃣ | **Email Header Analyzer**         | Inspect email headers to trace sources |
-| 5️⃣ | **Base64 & Hex Tool**             | Encode/decode in Base64 and Hex formats |
-| 6️⃣ | **File Hash Calculator**          | Get file hashes (MD5, SHA-1, SHA-256, etc.) |
-| 7️⃣ | **Text in Image Steganography**   | Hide secret text messages inside images |
-| 8️⃣ | **AES Video Steganography**       | Embed AES-encrypted videos into PNGs |
-| 9️⃣ | **Invisible Text Tool**           | Create invisible zero-width messages |
-| 🔟 | **GitHub Profile Finder**         | Search GitHub usernames and view profiles |
+| 3️⃣ | **RSA Encryption Tool**           : Generate RSA key pairs and encrypt/decrypt text 
+![harsh shah - visual selection (3)](https://github.com/user-attachments/assets/8eacb436-02c5-4216-9802-be89e39a12d4)
+
+| 4️⃣ | **Email Header Analyzer**         : Inspect email headers to trace sources 
+![harsh shah - visual selection (4)](https://github.com/user-attachments/assets/0e51214c-8a49-4e8e-b718-cfdd7e1309e5)
+
+| 5️⃣ | **Base64 & Hex Tool**             : Encode/decode in Base64 and Hex formats 
+![harsh shah - visual selection (5)](https://github.com/user-attachments/assets/dd33b1d8-b157-46b0-ac00-3b24ac931f5c)
+
+| 6️⃣ | **File Hash Calculator**          : Get file hashes (MD5, SHA-1, SHA-256, etc.) 
+![harsh shah - visual selection (6)](https://github.com/user-attachments/assets/27033790-ebd1-4318-9848-40c25c1abcc0)
+
+| 7️⃣ | **Text in Image Steganography**   : Hide secret text messages inside images 
+![harsh shah - visual selection (7)](https://github.com/user-attachments/assets/739175e2-ce3d-4839-99ab-243fd6520b8e)
+
+| 8️⃣ | **AES Video Steganography**       : Embed AES-encrypted videos into PNGs 
+![harsh shah - visual selection (8)](https://github.com/user-attachments/assets/ae66a703-bd8f-4337-921d-6272eb7ea8b9)
+
+| 9️⃣ | **Invisible Text Tool**           : Create invisible zero-width messages 
+![harsh shah - visual selection (9)](https://github.com/user-attachments/assets/f3c0b1fb-3965-4d15-91e6-41ce693a19dd)
+
 
 ---
 
@@ -51,13 +62,12 @@
 - 📦 Smooth hover cards with 3D-like elevation
 - 🌈 Animated gradient backgrounds
 
+![harsh shah - visual selection (10)](https://github.com/user-attachments/assets/a7945b93-5453-4a55-b0d5-880743a94e87)
+
 ---
 
 ## 🛡️ Security Features
 
-- ❌ Right-click disabled
-- ❌ Text selection disabled
-- ❌ Keyboard shortcuts (Ctrl+C, Ctrl+U, etc.) disabled
 - 🧠 Fully client-side — no backend needed
 
 ---
@@ -68,12 +78,6 @@
 2. Open `index.html` in your favorite browser
 3. Click on any tool card to open the utility
 4. Use all tools safely and instantly in-browser
-
----
-
-## 🌐 Live Demo
-
-🔗 [eternova.ct.ws](https://eternova.ct.ws)
 
 ---
 
