@@ -1,6 +1,8 @@
 # ⚡ Harsh Shah - Cybersecurity Tools Collection
 
-![harshlogo](https://github.com/user-attachments/assets/3612b70a-5196-455f-9c3c-ef27ffec7d45)
+![Untitled (5) (1)](https://github.com/user-attachments/assets/35476205-f8d4-4cb6-9ab5-5eab18ba6766)
+
+
 
 
 > A futuristic collection of powerful **client-side cybersecurity tools** built with **HTML, CSS, and JavaScript**.  
@@ -44,7 +46,8 @@
 ![harsh shah - visual selection (6)](https://github.com/user-attachments/assets/27033790-ebd1-4318-9848-40c25c1abcc0)
 
 | 7️⃣ | **Text in Image Steganography**   : Hide secret text messages inside images 
-![harsh shah - visual selection (7)](https://github.com/user-attachments/assets/739175e2-ce3d-4839-99ab-243fd6520b8e)
+
+![harsh shah - visual selection (7)](https://github.com/user-attachments/assets/9079a4c5-b99c-4f19-8204-e10a452ab304)
 
 | 8️⃣ | **AES Video Steganography**       : Embed AES-encrypted videos into PNGs 
 ![harsh shah - visual selection (8)](https://github.com/user-attachments/assets/ae66a703-bd8f-4337-921d-6272eb7ea8b9)
@@ -88,3 +91,6 @@ Licensed under the **MIT License** – free to use, modify, and distribute.
 ---
 
 ### 👨‍💻 Made with ❤️ by [Harsh Shah](https://github.com/harshvardhanshah63)
+
+![harsh shah - visual selection (11)](https://github.com/user-attachments/assets/31365e07-cf23-4a30-9a46-1abad77cc676)
+
