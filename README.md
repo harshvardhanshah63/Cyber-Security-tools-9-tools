@@ -1,41 +1,76 @@
-Harsh Shah - Cybersecurity Tools Collection
+# ⚡ Harsh Shah - Cybersecurity Tools Collection
 
-A collection of powerful client-side cybersecurity tools built with HTML, CSS, and JavaScript. All tools run completely in your browser - no server processing required!
-✨ Features
-- 100% Client-side – No data leaves your browser
-- Modern UI with glitch effects and hover animations
-- Sound effects for interactive feedback
-- Responsive design works on all devices
-- Security-focused with right-click and text selection disabled
-🛠️ Tools Included
-•	• Secure Image Steganography – Hide one image inside another image using steganography techniques.
-•	• AES Encryptor – Encrypt and decrypt messages using AES-256 symmetric encryption (client-side only).
-•	• RSA Encryption Tool – Generate RSA key pairs and perform secure public-key encryption/decryption.
-•	• Email Header Analyzer – Analyze email headers to trace sender information and identify spoofing attempts.
-•	• Base64 & Hex Tool – Encode/decode text in Base64 or Hex formats quickly and easily.
-•	• File Hash Calculator – Generate file hashes (MD5, SHA-1, SHA-256, etc.) to verify file integrity.
-•	• Text in Image Steganography – Hide and extract secret text messages inside images.
-•	• AES Video Steganography – Encrypt and embed videos inside PNG images with AES security.
-•	• Invisible Text Tool – Create and copy invisible messages (zero-width characters and steganography).
-•	• GitHub Profile Finder – Lookup GitHub user profiles and display their information.
-🎮 Interactive Elements
-•	• Hover sound effects on all cards
-•	• Glitch animation on the header text
-•	• Smooth card animations with 3D-like elevation
-•	• Dynamic gradients in the background
-🔒 Security Features
-•	• Right-click disabled
-•	• Text selection disabled
-•	• Keyboard shortcuts disabled (Ctrl+C, Ctrl+U, etc.)
-•	• All processing happens client-side
-🧩 How to Use
-•	• Clone this repository
-•	• Open index.html in your browser
-•	• Click on any tool card to launch it
-•	• Use the tools directly in your browser
-🌐 Live Demo
-Available at: https://eternova.ct.ws
-📜 License
-This project is open-source and available under the MIT License.
+![Banner](harshshah.png)
 
-Made with ❤️ by Harshvardhan Shah
+> A futuristic collection of powerful **client-side cybersecurity tools** built with **HTML, CSS, and JavaScript**.  
+> Everything runs **100% in your browser** — no server, no data leaks!
+
+---
+
+## ✨ Features
+
+- 🧠 **Client-side Only** – All processing stays inside your browser
+- 🧑‍💻 **Modern UI** – Glitch effects, neon themes, smooth animations
+- 🔊 **Sound Effects** – Interactive feedback with every click
+- 📱 **Responsive Design** – Works perfectly on all screen sizes
+- 🔐 **Security-First** – Right-click, copy-paste, and inspect disabled
+
+---
+
+## 🧰 Tools Included
+
+| #️⃣ | Tool Name                        | Description |
+|----|----------------------------------|-------------|
+| 1️⃣ | **Secure Image Steganography**     | Hide one image inside another securely |
+| 2️⃣ | **AES Encryptor**                 | AES-256 client-side encryption/decryption |
+| 3️⃣ | **RSA Encryption Tool**           | Generate RSA key pairs and encrypt/decrypt text |
+| 4️⃣ | **Email Header Analyzer**         | Inspect email headers to trace sources |
+| 5️⃣ | **Base64 & Hex Tool**             | Encode/decode in Base64 and Hex formats |
+| 6️⃣ | **File Hash Calculator**          | Get file hashes (MD5, SHA-1, SHA-256, etc.) |
+| 7️⃣ | **Text in Image Steganography**   | Hide secret text messages inside images |
+| 8️⃣ | **AES Video Steganography**       | Embed AES-encrypted videos into PNGs |
+| 9️⃣ | **Invisible Text Tool**           | Create invisible zero-width messages |
+| 🔟 | **GitHub Profile Finder**         | Search GitHub usernames and view profiles |
+
+---
+
+## 🕹️ Interactive UI Elements
+
+- 🎵 Hover sound effects
+- 💫 Glitch animations on titles
+- 📦 Smooth hover cards with 3D-like elevation
+- 🌈 Animated gradient backgrounds
+
+---
+
+## 🛡️ Security Features
+
+- ❌ Right-click disabled
+- ❌ Text selection disabled
+- ❌ Keyboard shortcuts (Ctrl+C, Ctrl+U, etc.) disabled
+- 🧠 Fully client-side — no backend needed
+
+---
+
+## 🚀 How to Use
+
+1. Clone/download this repository
+2. Open `index.html` in your favorite browser
+3. Click on any tool card to open the utility
+4. Use all tools safely and instantly in-browser
+
+---
+
+## 🌐 Live Demo
+
+🔗 [eternova.ct.ws](https://eternova.ct.ws)
+
+---
+
+## 📄 License
+
+Licensed under the **MIT License** – free to use, modify, and distribute.
+
+---
+
+### 👨‍💻 Made with ❤️ by [Harsh Shah](https://github.com/harshvardhanshah63)
