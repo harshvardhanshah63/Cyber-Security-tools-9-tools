@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>File Hash Calculator</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f7fa;  /* Light background color */
+      color: #333; /* Dark text for contrast */
+      overflow: hidden;
+    }
+
+    .bg-animation {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.05),
+        rgba(0, 0, 0, 0.05) 1px,
+        transparent 1px,
+        transparent 40px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.05),
+        rgba(0, 0, 0, 0.05) 1px,
+        transparent 1px,
+        transparent 40px
+      );
+      animation: gridMove 10s linear infinite;
+    }
+
+    @keyframes gridMove {
+      0% {
+        background-position: 0 0, 0 0;
+      }
+      100% {
+        background-position: 0 40px, 40px 0;
+      }
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #ffffff;  /* Light container background */
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.1); /* Subtle shadow for light theme */
+      margin-top: 10vh;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 1.8rem;
+      color: #0077cc; /* Blue text color for headings */
+      text-shadow: 0 0 10px #0077cc;
+    }
+
+    input[type="file"] {
+      display: block;
+      margin: 0 auto 20px;
+      padding: 10px;
+      background: #ffffff;  /* White background for input */
+      color: #333; /* Dark text */
+      border: 1px solid #0077cc; /* Blue border */
+      border-radius: 10px;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(0, 119, 204, 0.2); /* Light shadow */
+      transition: 0.2s ease;
+    }
+
+    input[type="file"]:hover {
+      background-color: #f0f0f0;  /* Slight hover effect */
+    }
+
+    p {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    code {
+      background: #f1f1f1;  /* Light background for code */
+      border: 1px solid #0077cc; /* Blue border */
+      color: #333;  /* Dark text */
+      padding: 10px;
+      display: block;
+      border-radius: 8px;
+      font-size: 14px;
+      word-break: break-all;
+      box-shadow: inset 0 0 10px rgba(0, 119, 204, 0.1); /* Light shadow */
+    }
+
+    @media screen and (max-width: 600px) {
+      .container {
+        margin: 20px;
+        padding: 20px;
+      }
+      h2 {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-animation"></div>
+
+  <div class="container">
+    <h2>🧮 File Hash Calculator</h2>
+    <input type="file" id="fileInput" />
+    <p><strong>MD5:</strong> <code id="md5Result">---</code></p>
+    <p><strong>SHA-256:</strong> <code id="shaResult">---</code></p>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
+
+  <script>
+    document.getElementById("fileInput").addEventListener("change", async function () {
+      const file = this.files[0];
+      if (!file) return;
+
+      const arrayBuffer = await file.arrayBuffer();
+
+      // Calculate SHA-256 using SubtleCrypto
+      const hashBuffer = await crypto.subtle.digest("SHA-256", arrayBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const sha256 = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+
+      // Calculate MD5 using CryptoJS
+      const wordArray = CryptoJS.lib.WordArray.create(arrayBuffer);
+      const md5 = CryptoJS.MD5(wordArray).toString();
+
+      document.getElementById("shaResult").textContent = sha256;
+      document.getElementById("md5Result").textContent = md5;
+    });
+  </script>
+</body>
+</html>

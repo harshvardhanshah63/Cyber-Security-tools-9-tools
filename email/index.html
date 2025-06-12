@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Email Header Analyzer</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      overflow-y: auto;
+    }
+
+    .bg-animation {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.02),
+        rgba(0, 0, 0, 0.02) 1px,
+        transparent 1px,
+        transparent 40px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.02),
+        rgba(0, 0, 0, 0.02) 1px,
+        transparent 1px,
+        transparent 40px
+      );
+      animation: gridMove 10s linear infinite;
+    }
+
+    @keyframes gridMove {
+      0% {
+        background-position: 0 0, 0 0;
+      }
+      100% {
+        background-position: 0 40px, 40px 0;
+      }
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 5vh auto;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+      width: 95%;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 2rem;
+      color: #333;
+      text-shadow: none;
+    }
+
+    textarea {
+      width: 100%;
+      height: 250px;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      background: #f9f9f9;
+      color: #333;
+      outline: none;
+      font-family: monospace;
+      resize: vertical;
+    }
+
+    textarea::placeholder {
+      color: #aaa;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 12px 24px;
+      border: none;
+      background-color: #3498db;
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      transition: 0.3s ease;
+      box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
+    }
+
+    button:hover {
+      background-color: #2980b9;
+      transform: translateY(-2px);
+    }
+
+    button:active {
+      transform: scale(0.95);
+      background-color: #2471a3;
+    }
+
+    .output {
+      margin-top: 20px;
+      white-space: pre-wrap;
+      background: #f1f1f1;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      color: #333;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .highlight {
+      color: #3498db;
+      font-weight: bold;
+    }
+
+    /* Mobile optimization */
+    @media screen and (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      button {
+        width: 100%;
+      }
+
+      textarea {
+        height: 180px;
+      }
+    }
+
+    /* Toast notification styles */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #2ecc71;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(46, 204, 113, 0.5);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      z-index: 100;
+    }
+
+    .toast.show {
+      opacity: 1;
+      visibility: visible;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-animation"></div>
+
+  <div class="container">
+    <h2>📬 Email Header Analyzer</h2>
+    <p>Paste your raw email header below:</p>
+    <textarea id="headerInput" placeholder="Paste raw email header here..."></textarea>
+
+    <div class="btn-group" style="text-align: center;">
+      <button onclick="analyzeHeader()">Analyze Header</button>
+    </div>
+
+    <div class="output" id="outputArea"></div>
+
+    <div class="btn-group" style="text-align: center;">
+      <button onclick="copyToClipboard()">Copy Output</button>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">Text copied to clipboard!</div>
+
+  <script>
+    function analyzeHeader() {
+      const raw = document.getElementById("headerInput").value;
+      const lines = raw.split(/\r?\n/);
+      const output = [];
+
+      let receivedCount = 0;
+      lines.forEach(line => {
+        if (/^From:/i.test(line)) {
+          output.push('<span class="highlight">From:</span> ' + line.replace(/^From:\s*/i, ''));
+        } else if (/^To:/i.test(line)) {
+          output.push('<span class="highlight">To:</span> ' + line.replace(/^To:\s*/i, ''));
+        } else if (/^Subject:/i.test(line)) {
+          output.push('<span class="highlight">Subject:</span> ' + line.replace(/^Subject:\s*/i, ''));
+        } else if (/^Return-Path:/i.test(line)) {
+          output.push('<span class="highlight">Return-Path:</span> ' + line.replace(/^Return-Path:\s*/i, ''));
+        } else if (/^Received:/i.test(line)) {
+          receivedCount++;
+          output.push(`<span class="highlight">Received [${receivedCount}]:</span> ${line.replace(/^Received:\s*/i, '')}`);
+        } else if (/^Authentication-Results:/i.test(line)) {
+          output.push('<span class="highlight">Authentication Results:</span> ' + line.replace(/^Authentication-Results:\s*/i, ''));
+        } else if (/spf=pass|spf=fail|dkim=pass|dkim=fail|dmarc=pass|dmarc=fail/i.test(line)) {
+          output.push('<span class="highlight">Auth Status:</span> ' + line.trim());
+        }
+      });
+
+      if (receivedCount === 0) {
+        output.push('<span class="highlight">Note:</span> No "Received" lines found. This may not be a valid header.');
+      }
+
+      document.getElementById("outputArea").innerHTML = output.join("\n");
+    }
+
+    function copyToClipboard() {
+      const outputText = document.getElementById("outputArea").innerText;
+      if (outputText) {
+        navigator.clipboard.writeText(outputText).then(() => {
+          showToast("Text copied to clipboard!");
+        }).catch(err => {
+          showToast("Failed to copy text.");
+        });
+      }
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2000);
+    }
+  </script>
+</body>
+</html>

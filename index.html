@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HARSHVARDHAN SHAH</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none; /* Disable text selection */
+    }
+    
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f0f0; /* light background */
+      color: #000000; /* black text */
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, #ffffff 0%, #f0f0f0 100%);
+      z-index: -3;
+    }
+    
+    body::after {
+      content: '';
+      position: fixed;
+      width: 200%;
+      height: 200%;
+      background: repeating-radial-gradient(circle, rgba(0, 0, 0, 0.05) 0px, transparent 2px);
+      animation: rotateBg 100s linear infinite;
+      z-index: -2;
+    }
+    
+    @keyframes rotateBg {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    header {
+      text-align: center;
+      padding: 40px 20px;
+      background: linear-gradient(120deg, #00000042, #ffffff);
+      color: #000;
+      box-shadow: 0 0 50px #ff696984;
+      position: relative;
+    }
+    
+    h1 {
+      font-size: 2.5em;
+      position: relative;
+    }
+    
+    header p {
+      font-size: 1.1em;
+      opacity: 0.8;
+    }
+    
+    h1::before, h1::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      overflow: hidden;
+      clip: rect(0, 900px, 0, 0);
+    }
+    
+    h1::before {
+      animation: glitchTop 2s infinite linear alternate-reverse;
+      color: #ff0266;
+    }
+    
+    h1::after {
+      animation: glitchBottom 3s infinite linear alternate-reverse;
+      color: #00bcd4;
+    }
+    
+    @keyframes glitchTop {
+      0% { clip: rect(0, 9999px, 0, 0); }
+      10% { clip: rect(10px, 9999px, 50px, 0); transform: translate(-3px, -2px); }
+      20% { clip: rect(85px, 9999px, 140px, 0); transform: translate(3px, 0px); }
+      30% { clip: rect(0, 9999px, 0, 0); }
+      40% { clip: rect(60px, 9999px, 100px, 0); transform: translate(-2px, 1px); }
+      100% { clip: rect(0, 9999px, 0, 0); }
+    }
+    
+    @keyframes glitchBottom {
+      0% { clip: rect(0, 9999px, 0, 0); }
+      10% { clip: rect(50px, 9999px, 90px, 0); transform: translate(2px, 2px); }
+      20% { clip: rect(5px, 9999px, 30px, 0); transform: translate(-3px, 0px); }
+      30% { clip: rect(0, 9999px, 0, 0); }
+      40% { clip: rect(70px, 9999px, 120px, 0); transform: translate(1px, -2px); }
+      100% { clip: rect(0, 9999px, 0, 0); }
+    }
+    
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 40px 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+    
+    .card {
+      background: rgba(255, 255, 255, 0.9); /* light card */
+      border: 1px solid rgba(0, 0, 0, 0.1); /* soft black border */
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(98, 0, 234, 0.1);
+      padding: 25px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease, border 0.4s ease;
+      backdrop-filter: blur(6px);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle, rgba(98, 0, 234, 0.05), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    .card:hover::before {
+      opacity: 1;
+    }
+    
+    .card:hover {
+      transform: translateY(-12px) scale(1.03);
+      border: 1px solid rgba(98, 0, 234, 0.4);
+      box-shadow:
+        0 0 20px rgba(98, 0, 234, 0.2),
+        0 0 40px rgba(98, 0, 234, 0.15),
+        0 0 80px rgba(98, 0, 234, 0.1);
+      z-index: 1;
+    }
+    
+    .card h3 {
+      margin-top: 0;
+      font-size: 1.4em;
+      color: #000000;
+    }
+    
+    .card p {
+      font-size: 0.95em;
+      line-height: 1.6em;
+      margin-bottom: 15px;
+      color: #000000;
+    }
+    
+    .card a {
+      text-decoration: none;
+      background: linear-gradient(120deg, #6200ea, #03dac6);
+      color: white;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-weight: bold;
+      box-shadow: 0 0 12px rgba(98, 0, 234, 0.3);
+      transition: all 0.3s ease-in-out;
+    }
+    
+    .card a:hover {
+      background: linear-gradient(120deg, #03dac6, #6200ea);
+      box-shadow: 0 0 20px rgba(98, 0, 234, 0.5);
+      transform: scale(1.05);
+    }
+    
+    footer {
+      text-align: center;
+      padding: 25px;
+      font-size: 0.9em;
+      color: #be0000;
+      border-top: 1px solid #ffffff;
+    }
+    
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2em;
+      }
+    
+      header p {
+        font-size: 1em;
+      }
+    
+      .card a {
+        font-size: 0.95em;
+        padding: 8px 16px;
+      }
+    }
+    </style>
+    
+</head>
+<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
+
+  <!-- 🔊 Hover Sound -->
+  <audio id="hover-sound" src="click.mp3" preload="auto"></audio>
+
+  <header>
+    <img src="harshshah.png" alt="Logo" style="height: 100px;"> 
+    
+    <p>CYBER SECURITY TOOLS</p>
+  </header>
+  
+
+  <div class="projects">
+    <!-- Repeat this structure for all your tools -->
+    <div class="card" onmouseenter="playHoverSound()">
+      <h3>Secure Image Steganography</h3>
+      <p>Hide Image inside another Image.</p>
+      <a href="stego/index.html" target="_blank">Open</a>
+    </div>
+    <div class="card" onmouseenter="playHoverSound()">
+      <h3>🔐 AES Encryptor</h3>
+      <p>Encrypt and decrypt messages using AES symmetric encryption — client-side only.</p>
+      <a href="aes/index.html" target="_blank">Open</a>
+    </div>
+    <div class="card" onmouseenter="playHoverSound()">
+      <h3>🔑 RSA Encryption Tool</h3>
+      <p>Generate RSA key pairs and perform secure public-key encryption/decryption.</p>
+      <a href="rsa/index.html" target="_blank">Open</a>
+    </div>
+    <div class="card" onmouseenter="playHoverSound()">
+      <h3>📬 Email Header Analyzer</h3>
+      <p>Analyze email headers to trace sender and identify spoofing attempts.</p>
+      <a href="email/index.html" target="_blank">View</a>
+    </div>
+    <div class="card" onmouseenter="playHoverSound()">
+      <h3>🧱 Base64 & Hex Tool</h3>
+      <p>Encode/decode text in Base64 or Hex formats. Simple and fast!</p>
+      <a href="hex/index.html" target="_blank">Launch</a>
+    </div>
+    <div class="card" onmouseenter="playHoverSound()">
+      <h3>📁 File Hash Calculator</h3>
+      <p>Generate file hashes (MD5, SHA-256, etc.) to verify file integrity.</p>
+      <a href="hashcalculator/index.html" target="_blank">Try Now</a>
+    </div>
+    <div class="card" onmouseenter="playHoverSound()">
+      <h3>🖼️ Text in Image</h3>
+      <p>Hide and extract secret messages inside images. Stego magic!</p>
+      <a href="txtstego/index.html" target="_blank">Try Now</a>
+    </div>
+    <div class="card" onmouseenter="playHoverSound()">
+      <h3>🎥 AES Video Stego</h3>
+      <p>Encrypt and embed videos inside PNG images with AES security.</p>
+      <a href="vidstego/index.html" target="_blank">Launch</a>
+    </div>
+    <div class="card" onmouseenter="playHoverSound()">
+      <h3>👻 Invisible Text Tool</h3>
+      <p>Type invisible messages and copy them securely. Stealth style!</p>
+      <a href="invitext/index.html" target="_blank">Launch</a>
+    </div>
+    
+  </div>
+
+  <footer>
+    <a href="https://eternova.ct.ws" target="_blank" style="text-decoration: none; color: inherit;">
+      eternova.ct.ws
+    </a>
+  </footer>
+  
+
+  <script>
+    function playHoverSound() {
+      const audio = document.getElementById('hover-sound');
+      audio.currentTime = 0;
+      audio.play();
+    }
+
+    // Prevent keyboard shortcuts like Ctrl+C or Ctrl+U
+    document.addEventListener('keydown', function(e) {
+      if ((e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 'a' || e.key === 's')) ||
+          (e.metaKey && (e.key === 'c' || e.key === 'u' || e.key === 'a' || e.key === 's'))) {
+        e.preventDefault();
+      }
+    });
+  </script>
+</body>
+</html>

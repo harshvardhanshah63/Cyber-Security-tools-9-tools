@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Secure Image Steganography (AES Encrypted)</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      color: #333;
+    }
+    input, button {
+      margin: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 80%;
+      max-width: 400px;
+    }
+    button {
+      background-color: #007BFF;
+      color: white;
+      cursor: pointer;
+    }
+    .toast {
+      visibility: hidden;
+      min-width: 200px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      border-radius: 5px;
+      position: fixed;
+      z-index: 1;
+      left: 50%;
+      bottom: 30px;
+      transform: translateX(-50%);
+    }
+    .toast.show {
+      visibility: visible;
+      animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    }
+    @keyframes fadein {
+      from { bottom: 0; opacity: 0; }
+      to { bottom: 30px; opacity: 1; }
+    }
+    @keyframes fadeout {
+      from { bottom: 30px; opacity: 1; }
+      to { bottom: 0; opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<h1>Secure Image Steganography</h1>
+
+<h2>Hide Image</h2>
+<input type="file" id="carrierImage" accept="image/*"><br>
+<input type="file" id="hiddenImage" accept="image/*"><br>
+<input type="password" id="password" placeholder="Password (for encryption)">
+<br>
+<button onclick="hideImage()">Hide Image Securely</button>
+
+<hr style="margin: 30px 0;">
+
+<h2>Extract Hidden Image</h2>
+<input type="file" id="stegoImage" accept="image/*"><br>
+<input type="password" id="extractPassword" placeholder="Password (for decryption)">
+<br>
+<button onclick="extractImage()">Extract Hidden Image</button>
+
+<div id="toast" class="toast"></div>
+
+<script>
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  toast.innerText = message;
+  toast.className = "toast show";
+  setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+}
+
+async function getKeyMaterial(password) {
+  const enc = new TextEncoder();
+  return crypto.subtle.importKey(
+    "raw",
+    enc.encode(password),
+    { name: "PBKDF2" },
+    false,
+    ["deriveBits", "deriveKey"]
+  );
+}
+
+async function deriveKey(password, salt) {
+  const keyMaterial = await getKeyMaterial(password);
+  return crypto.subtle.deriveKey(
+    {
+      name: "PBKDF2",
+      salt: salt,
+      iterations: 100000,
+      hash: "SHA-256"
+    },
+    keyMaterial,
+    { name: "AES-GCM", length: 256 },
+    true,
+    ["encrypt", "decrypt"]
+  );
+}
+
+async function hideImage() {
+  const carrierFile = document.getElementById('carrierImage').files[0];
+  const hiddenFile = document.getElementById('hiddenImage').files[0];
+  const password = document.getElementById('password').value;
+
+  if (!carrierFile || !hiddenFile) {
+    showToast("Please upload both images.");
+    return;
+  }
+
+  if (!password) {
+    showToast("Please enter a password.");
+    return;
+  }
+
+  const carrierArray = new Uint8Array(await carrierFile.arrayBuffer());
+  const hiddenArray = new Uint8Array(await hiddenFile.arrayBuffer());
+
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+
+  const key = await deriveKey(password, salt);
+  const encrypted = new Uint8Array(await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, hiddenArray));
+
+  const finalArray = new Uint8Array(carrierArray.length + salt.length + iv.length + encrypted.length);
+  finalArray.set(carrierArray, 0);
+  finalArray.set(salt, carrierArray.length);
+  finalArray.set(iv, carrierArray.length + salt.length);
+  finalArray.set(encrypted, carrierArray.length + salt.length + iv.length);
+
+  const blob = new Blob([finalArray], { type: carrierFile.type });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = "stego-" + carrierFile.name;
+  a.click();
+
+  showToast("✅ Image hidden securely!");
+}
+
+async function extractImage() {
+  const stegoFile = document.getElementById('stegoImage').files[0];
+  const password = document.getElementById('extractPassword').value;
+
+  if (!stegoFile) {
+    showToast("Please upload a stego image.");
+    return;
+  }
+
+  if (!password) {
+    showToast("Please enter the correct password.");
+    return;
+  }
+
+  const stegoArray = new Uint8Array(await stegoFile.arrayBuffer());
+
+  // Find end of carrier image
+  const sig = [0x49, 0x45, 0x4E, 0x44, 0xAE, 0x42, 0x60, 0x82]; // PNG end
+  let endIndex = stegoArray.length;
+  for (let i = 0; i < stegoArray.length - 8; i++) {
+    if (sig.every((b, j) => stegoArray[i + j] === b)) {
+      endIndex = i + 8;
+      break;
+    }
+  }
+
+  const salt = stegoArray.slice(endIndex, endIndex + 16);
+  const iv = stegoArray.slice(endIndex + 16, endIndex + 28);
+  const encrypted = stegoArray.slice(endIndex + 28);
+
+  try {
+    const key = await deriveKey(password, salt);
+    const decrypted = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, key, encrypted);
+    const blob = new Blob([decrypted]);
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = "hidden_image.png";
+    a.click();
+    showToast("✅ Hidden image extracted!");
+  } catch (e) {
+    console.error(e);
+    showToast("❌ Wrong password or no hidden data!");
+  }
+}
+</script>
+
+</body>
+</html>

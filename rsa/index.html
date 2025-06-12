@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RSA Public-Key Cryptography</title>
+  <script src="https://cdn.jsdelivr.net/npm/node-forge@1.3.1/dist/forge.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #bad2f6;
+      color: #333;
+      padding: 20px;
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .bg-anim {
+      position: fixed;
+      width: 100%; height: 100%;
+      top: 0; left: 0;
+      background: repeating-linear-gradient(
+        0deg, rgba(0,0,0,0.04), rgba(0,0,0,0.04) 1px, transparent 1px, transparent 40px
+      ), repeating-linear-gradient(
+        90deg, rgba(0,0,0,0.04), rgba(0,0,0,0.04) 1px, transparent 1px, transparent 40px
+      );
+      z-index: -1;
+      animation: moveGrid 30s linear infinite;
+    }
+
+    @keyframes moveGrid {
+      from { background-position: 0 0, 0 0; }
+      to   { background-position: 0 40px, 40px 0; }
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgb(255, 0, 0);
+    }
+
+    h2 {
+      text-align: center;
+      color: #000000;
+      text-shadow: 0 0 10px rgba(255, 50, 50, 0.415);
+    }
+
+    textarea, input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      background: #d4d4d4;
+      color: #000000;
+      border: 1px solid #00000088;
+      border-radius: 8px;
+      font-family: monospace;
+      resize: vertical;
+      max-height: 200px;
+      overflow: auto;
+    }
+
+    textarea::placeholder {
+      color: #000000;
+    }
+
+    button {
+      padding: 12px 20px;
+      background-color: #0067b1;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      margin-top: 10px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #38d4ff;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #107e17;
+      transform: translateY(-2px);
+    }
+
+    button:active {
+      transform: scale(0.95);
+    }
+
+    .output {
+      white-space: pre-wrap;
+      background: rgba(0, 119, 204, 0.1);
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid #0077cc66;
+      margin-top: 10px;
+      color: #333;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+      color: #0077cc;
+    }
+
+    hr {
+      margin: 30px 0;
+      border: none;
+      border-top: 1px solid #0077cc22;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: #0077ccaa;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background-color: #0077cc;
+    }
+
+    ::-webkit-scrollbar-track {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    /* Toast Notification Style */
+    .toast {
+      visibility: hidden;
+      min-width: 250px;
+      margin-left: -125px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      border-radius: 2px;
+      padding: 16px;
+      position: fixed;
+      z-index: 1;
+      left: 50%;
+      bottom: 30px;
+      font-size: 17px;
+      box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+      transition: visibility 0s, opacity 0.5s ease-in-out;
+    }
+
+    .toast.show {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* Error/Alert Message Box */
+    .alert-box {
+      background-color: #f44336; /* Red */
+      color: white;
+      padding: 15px;
+      margin-top: 15px;
+      border-radius: 8px;
+      display: none;
+    }
+
+    .alert-box.success {
+      background-color: #4CAF50; /* Green */
+    }
+
+    .alert-box.warning {
+      background-color: #000000; /* Orange */
+    }
+
+  </style>
+</head>
+<body>
+  <div class="bg-anim"></div>
+
+  <div class="container">
+    <h2>🔐 RSA Public-Key Encryption</h2>
+
+    <button onclick="generateKeys()">⚡ Generate RSA Key Pair</button>
+
+    <label>Public Key:</label>
+    <textarea id="publicKey" rows="6" readonly></textarea>
+    <button onclick="copyToClipboard('publicKey')">📋 Copy Public Key</button>
+    <button onclick="pasteFromClipboard('publicKey')">📥 Paste Public Key</button>
+
+    <label>Private Key:</label>
+    <textarea id="privateKey" rows="6" readonly></textarea>
+    <button onclick="copyToClipboard('privateKey')">📋 Copy Private Key</button>
+    <button onclick="pasteFromClipboard('privateKey')">📥 Paste Private Key</button>
+
+    <hr>
+
+    <label for="plainText">🔤 Message to Encrypt:</label>
+    <textarea id="plainText" rows="4" placeholder="Enter your secret message..."></textarea>
+    <button onclick="encryptMessage()">🔐 Encrypt with Public Key</button>
+
+    <div class="output" id="encryptedText"></div>
+    <button onclick="copyToClipboard('encryptedText')">📋 Copy Encrypted Output</button>
+
+    <hr>
+
+    <button onclick="decryptMessage()">🔓 Decrypt with Private Key</button>
+    <div class="output" id="decryptedText"></div>
+    <button onclick="copyToClipboard('decryptedText')">📋 Copy Decrypted Output</button>
+
+    <!-- Error/Alert Message Box -->
+    <div id="alertBox" class="alert-box"></div>
+  </div>
+
+  <div id="toast" class="toast">Text copied to clipboard!</div>
+
+  <script>
+    let publicKey, privateKey;
+
+    function generateKeys() {
+      const keypair = forge.pki.rsa.generateKeyPair({ bits: 2048, e: 0x10001 });
+      publicKey = keypair.publicKey;
+      privateKey = keypair.privateKey;
+      document.getElementById('publicKey').value = forge.pki.publicKeyToPem(publicKey);
+      document.getElementById('privateKey').value = forge.pki.privateKeyToPem(privateKey);
+      document.getElementById('encryptedText').innerText = '';
+      document.getElementById('decryptedText').innerText = '';
+      showAlert('RSA Key Pair Generated!', 'success');
+    }
+
+    function encryptMessage() {
+      const msg = document.getElementById('plainText').value;
+      if (!publicKey || !msg) {
+        showAlert("⚠️ Please generate keys and enter a message.", 'warning');
+        return;
+      }
+      const encrypted = publicKey.encrypt(forge.util.encodeUtf8(msg), "RSA-OAEP");
+      const encryptedBase64 = forge.util.encode64(encrypted);
+      document.getElementById('encryptedText').innerText = "🔒 Encrypted Text:\n" + encryptedBase64;
+    }
+
+    function decryptMessage() {
+      const encryptedText = document.getElementById('encryptedText').innerText.split('\n')[1];
+      if (!privateKey || !encryptedText) {
+        showAlert("⚠️ Please generate keys and encrypt a message first.", 'warning');
+        return;
+      }
+      try {
+        const decoded = forge.util.decode64(encryptedText);
+        const decrypted = privateKey.decrypt(decoded, "RSA-OAEP");
+        document.getElementById('decryptedText').innerText = "🔓 Decrypted Text:\n" + forge.util.decodeUtf8(decrypted);
+      } catch (e) {
+        showAlert("❌ Decryption failed. Check keys or ciphertext.", 'warning');
+      }
+    }
+
+    function copyToClipboard(id) {
+      const output = document.getElementById(id);
+      const text = output.value || output.innerText;
+
+      if (text) {
+        navigator.clipboard.writeText(text).then(function() {
+          showToast();
+        }).catch(function(err) {
+          console.error('Failed to copy text: ', err);
+        });
+      }
+    }
+
+    function pasteFromClipboard(id) {
+      navigator.clipboard.readText().then(text => {
+        document.getElementById(id).value = text;
+      }).catch(err => {
+        console.error('Failed to paste text: ', err);
+      });
+    }
+
+    // Toast notification display
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.className = "toast show";
+      setTimeout(function() {
+        toast.className = toast.className.replace("show", "");
+      }, 2000); // Hide after 2 seconds
+    }
+
+    // Show alert message
+    function showAlert(message, type) {
+      const alertBox = document.getElementById('alertBox');
+      alertBox.innerText = message;
+      alertBox.className = 'alert-box ' + type;
+      alertBox.style.display = 'block';
+      setTimeout(() => {
+        alertBox.style.display = 'none';
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
